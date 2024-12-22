@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome</title>
+    <link rel="stylesheet" href="first_pg.css"> <!-- Link to the external CSS file -->
+</head>
+<body>
+
+    <div class="intro-container">
+        <h1>Got Your Results</h1>
+        <p id="intro-message"></p> <!-- The primary message will be typed dynamically here -->
+        <p id="sub-message"></p> <!-- Secondary message typed dynamically here -->
+        <button id="enter-btn" style="display: none;">Let's Go</button> <!-- Initially hidden -->
+    </div>
+
+    <!-- Spinner overlay -->
+    <div id="spinner-overlay" class="spinner-overlay">
+        <img src="spinner.gif" alt="Loading..." class="spinner">
+    </div>
+
+    <script src="first_pg.js"></script> <!-- Link to the external JavaScript file -->
+</body>
+</html>
