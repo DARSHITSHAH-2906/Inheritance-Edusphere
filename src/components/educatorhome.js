@@ -1,19 +1,42 @@
-import React from 'react';
-import { useNavigate, Link } from "react-router-dom"; // Import useNavigate hook
+import React, {useState} from 'react';
+import { useNavigate,Link } from "react-router-dom"; // Import useNavigate hook
 
 const EduSphere = () => {
 
   const navigate = useNavigate(); // Hook for navigation
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [darkMode, setDarkMode] = useState(true);
 
-  // Click handler for the Get Started button
-  const handleGetStarted = () => {
-    navigate('/role-selection'); // Redirect to the login page
+   // Toggle Dropdown Menu
+   const toggleDropdown = () => setDropdownOpen(!dropdownOpen);
+
+   // Toggle Dark/Light Mode
+   const toggleDarkMode = () => setDarkMode(!darkMode);
+  
+
+  // Function to handle MetaMask wallet connection
+  const handleConnectWallet = async () => {
+    if (window.ethereum) {
+      try {
+        await window.ethereum.request({ method: "eth_requestAccounts" });
+        alert("Wallet connected successfully!");
+      } catch (error) {
+        alert("Failed to connect wallet. Please try again.");
+      }
+    } else {
+      alert("MetaMask is not installed. Please install MetaMask and try again.");
+    }
   };
 
+  // Function to navigate to Educator Sign Up
+  const handleEducatorSignUp = () => {
+    navigate("/signup"); // Navigate to the Educator Sign Up page
+  };
 
-  
-
-  
+  // Function to navigate to Student Sign Up
+  const handleStudentSignUp = () => {
+    navigate("/signup"); // Navigate to the Student Sign Up page
+  };
 
   
 
@@ -32,6 +55,16 @@ const EduSphere = () => {
             color: #fff;
             overflow-x: hidden;
           }
+
+          .dark-mode {
+            background-color: #111;
+            color: #fff;
+          }
+          .light-mode {
+            background-color: #fff;
+            color: #000;
+          }
+
           a {
             text-decoration: none;
           }
@@ -108,6 +141,53 @@ const EduSphere = () => {
           }
           .button:hover {
             background-color: #ffae42;
+          }
+
+          /* Dropdown Menu */
+          .dropdown {
+            position: relative;
+            display: inline-block;
+          }
+          .dropdown-button {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #000000;
+            border-radius: 10%;
+            cursor: pointer;
+          }
+          .dropdown-button:hover {
+            background-color: #fff;
+          }
+          .dropdown-content {
+            display: ${dropdownOpen ? "flex" : "none"};
+            flex-direction: column;
+            position: absolute;
+            top: 50px;
+            right: 0;
+            background-color: #333;
+            color: #fff;
+            padding: 15px;
+            box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            z-index: 1001;
+            gap: 10px;
+          }
+          .dropdown-content a {
+            text-decoration: none;
+            color: #f90;
+            padding: 8px 12px;
+            border-radius: 5px;
+          }
+          .dropdown-content a:hover {
+            background-color: #444;
+          }
+          .dropdown-content .toggle-switch {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
           }
 
           /* Hero Section */
@@ -296,11 +376,49 @@ const EduSphere = () => {
           <span>EduSphere</span>
         </div>
         <nav>
-         
-
-          <button onClick={handleGetStarted} >Get Started</button>
+          <a href="#home">Home</a>
           
+          
+          <Link to="/createcourses">Create Courses</Link>
+          <Link to="/contest">Student Insights</Link>
+          <Link to="/contest">Reports</Link>
+
+         
         </nav>
+
+        {/* Dropdown Menu */}
+        <div className="dropdown">
+          <div className="dropdown-button" onClick={toggleDropdown}>
+            {/* Google Drive-style 9-dot icon */}
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 10px)", gap: "3px" }}>
+              {Array.from({ length: 9 }).map((_, index) => (
+                <div
+                  key={index}
+                  style={{
+                    width: "10px",
+                    height: "10px",
+                    backgroundColor: "#f90",
+                    borderRadius: "50%",
+                  }}
+                ></div>
+              ))}
+            </div>
+          </div>
+          <div className="dropdown-content">
+            <Link to="/profile">Profile</Link>
+            <Link to="/coins">Coins</Link>
+            <Link to="/managecourses">Manage Courses</Link>
+            <Link to="/progress">Progress</Link>
+            <Link to="/certification">Certification</Link>
+            <div className="toggle-switch">
+              
+              <button className="button" onClick={toggleDarkMode}>
+                {darkMode ? "Switch to Light" : "Switch to Dark"}
+              </button>
+              
+            </div>
+          </div>
+        </div>
       </header>
 
       {/* Hero Section */}
